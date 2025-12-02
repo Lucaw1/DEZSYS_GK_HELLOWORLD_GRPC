@@ -20,14 +20,26 @@ public class HelloWorldClient {
                 .build());
         System.out.println( helloResponse.getText() );
 
-        Hello.DataRecord data = Hello.DataRecord.newBuilder()
-                .setId(1)
-                .setName("Temperature Sensor A")
-                .setValue(21.7)
-                .build();
+        Hello.DataItem item1 = Hello.DataItem.newBuilder()
+        .setId(1)
+        .setName("Item A")
+        .setValue(10.5)
+        .build();
 
-        Hello.DataResponse dataResponse = stub.sendData(data);
-        System.out.println( dataResponse.getMessage() );
+        Hello.DataItem item2 = Hello.DataItem.newBuilder()
+        .setId(2)
+        .setName("Item B")
+        .setValue(20.7)
+        .build();
+
+        Hello.DataRecord record = Hello.DataRecord.newBuilder()
+        .addItems(item1)
+        .addItems(item2)   
+        .build();
+
+        Hello.DataResponse response = stub.sendData(record);
+        System.out.println(response.getMessage());
+
         
         channel.shutdown();
 

@@ -7,17 +7,17 @@ def run():
     channel = grpc.insecure_channel('localhost:50051')
     stub = hello_pb2_grpc.HelloWorldServiceStub(channel)
 
-    # DataRecord erstellen
-    record = hello_pb2.DataRecord(
-        id=42,
-        name="Weather Station B",
-        value=18.9
-    )
+    items = [
+    hello_pb2.DataItem(id=1, name="Item A", value=10.5),
+    hello_pb2.DataItem(id=2, name="Item B", value=20.7),
+    hello_pb2.DataItem(id=3, name="Item C", value=99.1)
+    ]
 
-    # RPC aufrufen
+    record = hello_pb2.DataRecord(items=items)
+
     response = stub.sendData(record)
+    print(response.message)
 
-    print("Server response:", response.message)
 
 if __name__ == "__main__":
     run()

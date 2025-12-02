@@ -16,19 +16,23 @@ public class HelloWorldServiceImpl extends HelloWorldServiceGrpc.HelloWorldServi
     }
 
     @Override
-    public void sendData(Hello.DataRecord request, StreamObserver<Hello.DataResponse> responseObserver) {
+public void sendData(Hello.DataRecord request, StreamObserver<Hello.DataResponse> responseObserver) {
 
-    System.out.println("Received DataRecord: " + request);
+    StringBuilder sb = new StringBuilder("Received DataItems:\n");
 
-    String msg = "Received DataRecord with ID=" + request.getId() +
-            ", Name=" + request.getName() +
-            ", Value=" + request.getValue();
+    for (Hello.DataItem item : request.getItemsList()) {
+        sb.append("ID: ").append(item.getId())
+          .append(", Name: ").append(item.getName())
+          .append(", Value: ").append(item.getValue())
+          .append("\n");
+    }
 
     Hello.DataResponse response = Hello.DataResponse.newBuilder()
-            .setMessage(msg)
+            .setMessage(sb.toString())
             .build();
 
     responseObserver.onNext(response);
     responseObserver.onCompleted();
 }
+
 }
