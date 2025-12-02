@@ -14,4 +14,21 @@ public class HelloWorldServiceImpl extends HelloWorldServiceGrpc.HelloWorldServi
         responseObserver.onCompleted();
 
     }
+
+    @Override
+    public void sendData(Hello.DataRecord request, StreamObserver<Hello.DataResponse> responseObserver) {
+
+    System.out.println("Received DataRecord: " + request);
+
+    String msg = "Received DataRecord with ID=" + request.getId() +
+            ", Name=" + request.getName() +
+            ", Value=" + request.getValue();
+
+    Hello.DataResponse response = Hello.DataResponse.newBuilder()
+            .setMessage(msg)
+            .build();
+
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+}
 }

@@ -19,6 +19,16 @@ public class HelloWorldClient {
                 .setLastname(lastname)
                 .build());
         System.out.println( helloResponse.getText() );
+
+        Hello.DataRecord data = Hello.DataRecord.newBuilder()
+                .setId(1)
+                .setName("Temperature Sensor A")
+                .setValue(21.7)
+                .build();
+
+        Hello.DataResponse dataResponse = stub.sendData(data);
+        System.out.println( dataResponse.getMessage() );
+        
         channel.shutdown();
 
     }
